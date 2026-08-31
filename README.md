@@ -64,23 +64,6 @@ Target Architecture
 - Hidden 2: 64 neurons + ReLU
 - Output: 26 neurons + Softmax
 
-Repository Structure
-
-neural-network-from-scratch/
-│── data/
-│── images/
-│── notebooks/
-│── src/
-│   ├── activations.py
-│   ├── layers.py
-│   ├── loss.py
-│   ├── model.py
-│   ├── train.py
-│   ├── predict.py
-│   └── utils.py
-│── README.md
-│── requirements.txt
-
 Tech Stack
 
 - Python 3
