@@ -106,20 +106,12 @@ def load_emnist(train_img, train_lbl, test_img, test_lbl):
 
     X_train, y_train, X_cv, y_cv = train_cv_split(X_train, y_train)
 
-    return X_train, y_train, X_cv, y_cv, X_test, y_test
-
-
-if __name__ == "__main__":
-    X_train, y_train, X_cv, y_cv, X_test, y_test = load_emnist(
-        "../data/raw/emnist-letters-train-images-idx3-ubyte.gz",
-        "../data/raw/emnist-letters-train-labels-idx1-ubyte.gz",
-        "../data/raw/emnist-letters-test-images-idx3-ubyte.gz",
-        "../data/raw/emnist-letters-test-labels-idx1-ubyte.gz",
-    )
-
     print("Train images :", X_train.shape)
     print("Train labels :", y_train.shape)
     print("C.V images :", X_cv.shape)
     print("C.V labels :", y_cv.shape)
     print("Test images  :", X_test.shape)
     print("Test labels  :", y_test.shape)
+
+    return X_train, y_train, X_cv, y_cv, X_test, y_test
+
