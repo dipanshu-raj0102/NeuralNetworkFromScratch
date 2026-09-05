@@ -93,31 +93,89 @@ NeuralNetworkFromScratch/
 
 ## Mathematical Formulation
 
-### Dense Layer
+The network is implemented from first principles using matrix operations and gradient-based optimization.
 
-<p align="center"><img src="https://latex.codecogs.com/svg.image?Z=XW+b" /></p>
+### 1. Dense Layer
 
-### ReLU
+For each layer, the linear transformation is
 
-<p align="center"><img src="https://latex.codecogs.com/svg.image?A=\max(0,Z)" /></p>
+$$
+Z = XW + b
+$$
 
-### Softmax
+where:
 
-<p align="center"><img src="https://latex.codecogs.com/svg.image?\hat{y}_i=\frac{e^{z_i}}{\sum_j e^{z_j}}" /></p>
-
-### Cross Entropy
-
-<p align="center"><img src="https://latex.codecogs.com/svg.image?J=-\frac1m\sum_{i=1}^{m}y_i\log(\hat{y}_i)" /></p>
-
-### Backpropagation
-
-<p align="center"><img src="https://latex.codecogs.com/svg.image?dZ=\hat{y}-y" /></p>
-
-<p align="center"><img src="https://latex.codecogs.com/svg.image?dW=\frac1mA^TdZ" /></p>
-
-<p align="center"><img src="https://latex.codecogs.com/svg.image?db=\frac1m\sum dZ" /></p>
+- $X$ — input matrix
+- $W$ — weight matrix
+- $b$ — bias vector
+- $Z$ — pre-activation output
 
 ---
+
+### 2. ReLU Activation
+
+The hidden layers use the Rectified Linear Unit:
+
+$$
+A = \max(0, Z)
+$$
+
+This introduces non-linearity while keeping the gradient computation simple.
+
+---
+
+### 3. Softmax Output
+
+The output layer converts logits into class probabilities:
+
+$$
+\hat{y}_i =
+\frac{e^{z_i}}
+{\sum_{j=1}^{26} e^{z_j}}
+$$
+
+A numerically stable implementation subtracts the maximum logit before exponentiation.
+
+---
+
+### 4. Cross-Entropy Loss
+
+The objective minimized during training is
+
+$$
+J = -
+\frac{1}{m}
+\sum_{i=1}^{m}
+y_i \log(\hat{y}_i)
+$$
+
+where $m$ is the batch size.
+
+---
+
+### 5. Backpropagation
+
+For the combination of **Softmax + Cross Entropy**,
+
+$$
+dZ = \hat{y} - y
+$$
+
+The gradients of the Dense layer are
+
+$$
+dW = \frac{1}{m} X^T dZ
+$$
+
+$$
+db = \frac{1}{m}\sum dZ
+$$
+
+and the gradient propagated to the previous layer is
+
+$$
+dX = dZ W^T
+$$
 
 ## Training Results
 
