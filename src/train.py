@@ -1,5 +1,4 @@
 
-import matplotlib.pyplot as plt
 import numpy as np
 
 from data_loader import (
@@ -7,6 +6,13 @@ from data_loader import (
 )
 from model import *
 from optimizer import SGDOptimizer
+from visualize import (
+    plot_confusion_matrix,
+    plot_layer1_weights,
+    plot_misclassified,
+    plot_predictions,
+    plot_training_history,
+)
 
 
 def evaluate(model, X, y_one_hot):
@@ -71,34 +77,6 @@ def fit(
     return history
 
 
-def plot_training_history(history):
-    """Plots Loss and Accuracy curves over epochs."""
-    epochs = range(1, len(history["train_loss"]) + 1)
-
-    fig, axes = plt.subplots(1, 2, figsize=(12, 4))
-
-    # Loss Plot
-    axes[0].plot(epochs, history["train_loss"], label="Train Loss")
-    axes[0].plot(epochs, history["val_loss"], label="Val Loss", linestyle="--")
-    axes[0].set_title("Cross-Entropy Loss vs. Epochs")
-    axes[0].set_xlabel("Epoch")
-    axes[0].set_ylabel("Loss")
-    axes[0].legend()
-    axes[0].grid(True)
-
-    # Accuracy Plot
-    axes[1].plot(epochs, history["train_acc"], label="Train Acc")
-    axes[1].plot(epochs, history["val_acc"], label="Val Acc", linestyle="--")
-    axes[1].set_title("Accuracy vs. Epochs")
-    axes[1].set_xlabel("Epoch")
-    axes[1].set_ylabel("Accuracy (%)")
-    axes[1].legend()
-    axes[1].grid(True)
-
-    plt.tight_layout()
-    plt.show()
-
-
 if __name__ == "__main__":
       
     print("Loading datasets...")
@@ -112,8 +90,13 @@ if __name__ == "__main__":
 
     model = MLP(input_dim=784, num_classes=26)
 
-    trainable_layers = [model.layer1, model.layer2, model.layer3]
-    optimizer = SGDOptimizer(layers=trainable_layers, lr=2)
+    trainable_layers = [
+        model.layer1,
+        model.layer2,
+        model.layer3,
+        model.layer4,
+    ]
+    optimizer = SGDOptimizer(layers=trainable_layers, lr=0.4)
 
     history = fit(
         model=model,
@@ -122,12 +105,17 @@ if __name__ == "__main__":
         y_train=y_train,
         X_val=X_cv,
         y_val=y_cv,
-        epochs=20,
+        epochs=100,
         batch_size=128,
     )
 
     test_loss, test_acc = evaluate(model, X_test, y_test)
     print("\n--- Final Test Results ---")
     print(f"Test Loss: {test_loss:.4f} | Test Accuracy: {test_acc:.2f}%")
-
+    
+    # After training
     plot_training_history(history)
+    plot_confusion_matrix(model, X_test, y_test)
+    plot_predictions(model, X_test, y_test)
+    plot_layer1_weights(model)
+    plot_misclassified(model, X_test, y_test)
