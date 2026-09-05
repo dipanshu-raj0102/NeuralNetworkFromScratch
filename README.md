@@ -184,7 +184,6 @@ $$
 | Test Accuracy | **89.21%** |
 | Test Loss | **0.3496** |
 | Optimizer | SGD |
-| Learning Rate | 2.0 |
 | Epochs | 100 |
 | Batch Size | 128 |
 
