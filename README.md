@@ -3,7 +3,7 @@
 A fully connected **Multilayer Perceptron (MLP)** built entirely with **NumPy**, without TensorFlow or PyTorch. This project implements forward propagation, backpropagation, stochastic gradient descent, and visualization utilities from scratch for handwritten alphabet recognition using the **EMNIST Letters** dataset.
 
 <p align="center">
-  <img src="images/architecture_mlp.svg" width="900" alt="MLP Architecture">
+  <img src="images/mlp_architecture.svg" width="900" alt="MLP Architecture">
 </p>
 
 ---
